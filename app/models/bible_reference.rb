@@ -1,0 +1,2 @@
+class BibleReference < ApplicationRecord
+end
