@@ -66,32 +66,27 @@ jobs:
           - 5432:5432
         options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
 
-    steps:
-      - name: Install packages
-        run: sudo apt-get update && sudo apt-get install --no-install-recommends -y build-essential git libpq-dev libyaml-dev pkg-config google-chrome-stable
+      steps:
+        - name: Checkout Code
+          uses: actions/checkout@v4
 
-      - name: Checkout code
-        uses: actions/checkout@v4
+        - name: Set up Ruby
+          uses: ruby/setup-ruby@v1
+          with:
+            ruby-version: 3.4.0
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: .ruby-version
-          bundler-cache: true
+        - name: Install Dependencies
+          run: bundle install
 
-      - name: Create and prepare test database
-        run: bin/rails db:create db:schema:load RAILS_ENV=test
+        - name: Start PostgreSQL
+          run: sudo service postgresql start
 
-      - name: Run tests
-        env:
-          RAILS_ENV: test
-          DATABASE_URL: postgres://postgres:postgres@localhost:5432
-        run: bin/rspec
+        - name: Create PostgreSQL Role
+          run: |
+            sudo -u postgres psql -c "CREATE ROLE root WITH LOGIN SUPERUSER CREATEDB CREATEROLE PASSWORD 'password';"
 
-      - name: Keep screenshots from failed system tests
-        uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: screenshots
-          path: ${{ github.workspace }}/tmp/screenshots
-          if-no-files-found: ignore
+        - name: Prepare Database
+          run: bin/rails db:create db:schema:load RAILS_ENV=test
+
+        - name: Run Tests
+          run: bin/rails test
