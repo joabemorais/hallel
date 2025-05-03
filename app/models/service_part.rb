@@ -1,0 +1,2 @@
+class ServicePart < ApplicationRecord
+end
