@@ -66,27 +66,29 @@ jobs:
           - 5432:5432
         options: --health-cmd="pg_isready" --health-interval=10s --health-timeout=5s --health-retries=3
 
-      steps:
-        - name: Checkout Code
-          uses: actions/checkout@v4
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-        - name: Set up Ruby
-          uses: ruby/setup-ruby@v1
-          with:
-            ruby-version: 3.4.0
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.4.0
 
-        - name: Install Dependencies
-          run: bundle install
+      - name: Install Dependencies
+        run: bundle install
 
-        - name: Start PostgreSQL
-          run: sudo service postgresql start
+      - name: Start PostgreSQL
+        run: sudo service postgresql start
 
-        - name: Create PostgreSQL Role
-          run: |
-            sudo -u postgres psql -c "CREATE ROLE root WITH LOGIN SUPERUSER CREATEDB CREATEROLE PASSWORD 'password';"
+      - name: Create PostgreSQL Role
+        run: |
+          sudo -u postgres psql -c "CREATE ROLE root WITH LOGIN SUPERUSER CREATEDB CREATEROLE PASSWORD 'password';"
 
-        - name: Prepare Database
-          run: bin/rails db:create db:schema:load RAILS_ENV=test
+      - name: Prepare Database
+        run: |
+          RAILS_ENV=test bundle exec rails db:create
+          RAILS_ENV=test bundle exec rails db:schema:load
 
-        - name: Run Tests
-          run: bin/rails test
+      - name: Run RSpec Tests
+        run: bundle exec rspec
