@@ -7,4 +7,7 @@ class Song < ApplicationRecord
 
   has_many :worship_service_songs
   has_many :worship_services, through: :worship_service_songs
+
+  has_many :song_collections
+  has_many :collections, through: :song_collections
 end
