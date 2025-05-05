@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_02_222951) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_03_143251) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -31,6 +31,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_02_222951) do
     t.string "end_book_name"
     t.integer "end_chapter"
     t.integer "end_verse"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "collections", force: :cascade do |t|
+    t.string "name"
+    t.string "abbreviation"
+    t.string "edition"
+    t.string "collection_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -64,6 +73,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_02_222951) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "song_collections", force: :cascade do |t|
+    t.bigint "song_id", null: false
+    t.bigint "collection_id", null: false
+    t.integer "item_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["collection_id"], name: "index_song_collections_on_collection_id"
+    t.index ["song_id"], name: "index_song_collections_on_song_id"
   end
 
   create_table "song_composers", force: :cascade do |t|
@@ -133,6 +152,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_02_222951) do
   end
 
   add_foreign_key "bible_reference_links", "bible_references"
+  add_foreign_key "song_collections", "collections"
+  add_foreign_key "song_collections", "songs"
   add_foreign_key "song_composers", "composers"
   add_foreign_key "song_composers", "songs"
   add_foreign_key "song_themes", "songs"
