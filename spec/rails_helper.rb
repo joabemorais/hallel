@@ -40,6 +40,17 @@ RSpec.configure do |config|
     Rails.root.join('spec/fixtures')
   ]
 
+  # Include FactoryBot methods like `build`, `create`, etc.
+  config.include FactoryBot::Syntax::Methods
+
+  # Shoulda Matchers configuration
+  Shoulda::Matchers.configure do |config|
+    config.integrate do |with|
+      with.test_framework :rspec
+      with.library :rails
+    end
+  end
+
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
