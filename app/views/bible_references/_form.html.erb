@@ -1,0 +1,47 @@
+<%= form_with(model: bible_reference, class: "contents") do |form| %>
+  <% if bible_reference.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
+      <h2><%= pluralize(bible_reference.errors.count, "error") %> prohibited this bible_reference from being saved:</h2>
+
+      <ul class="list-disc ml-6">
+        <% bible_reference.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="my-5">
+    <%= form.label :start_book_name %>
+    <%= form.text_field :start_book_name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": bible_reference.errors[:start_book_name].none?, "border-red-400 focus:outline-red-600": bible_reference.errors[:start_book_name].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :start_chapter %>
+    <%= form.number_field :start_chapter, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": bible_reference.errors[:start_chapter].none?, "border-red-400 focus:outline-red-600": bible_reference.errors[:start_chapter].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :start_verse %>
+    <%= form.number_field :start_verse, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": bible_reference.errors[:start_verse].none?, "border-red-400 focus:outline-red-600": bible_reference.errors[:start_verse].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :end_book_name %>
+    <%= form.text_field :end_book_name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": bible_reference.errors[:end_book_name].none?, "border-red-400 focus:outline-red-600": bible_reference.errors[:end_book_name].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :end_chapter %>
+    <%= form.number_field :end_chapter, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": bible_reference.errors[:end_chapter].none?, "border-red-400 focus:outline-red-600": bible_reference.errors[:end_chapter].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :end_verse %>
+    <%= form.number_field :end_verse, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": bible_reference.errors[:end_verse].none?, "border-red-400 focus:outline-red-600": bible_reference.errors[:end_verse].any?}] %>
+  </div>
+
+  <div class="inline">
+    <%= form.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<% end %>

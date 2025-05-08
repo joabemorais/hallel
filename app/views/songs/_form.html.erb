@@ -1,0 +1,52 @@
+<%= form_with(model: song, class: "contents") do |form| %>
+  <% if song.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
+      <h2><%= pluralize(song.errors.count, "error") %> prohibited this song from being saved:</h2>
+
+      <ul class="list-disc ml-6">
+        <% song.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="my-5">
+    <%= form.label :title %>
+    <%= form.text_field :title, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": song.errors[:title].none?, "border-red-400 focus:outline-red-600": song.errors[:title].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :musical_key %>
+    <%= form.text_field :musical_key, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": song.errors[:musical_key].none?, "border-red-400 focus:outline-red-600": song.errors[:musical_key].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :lyrics_url %>
+    <%= form.text_field :lyrics_url, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": song.errors[:lyrics_url].none?, "border-red-400 focus:outline-red-600": song.errors[:lyrics_url].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :chords_url %>
+    <%= form.text_field :chords_url, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": song.errors[:chords_url].none?, "border-red-400 focus:outline-red-600": song.errors[:chords_url].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :sheet_music_url %>
+    <%= form.text_field :sheet_music_url, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": song.errors[:sheet_music_url].none?, "border-red-400 focus:outline-red-600": song.errors[:sheet_music_url].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :last_sung_at %>
+    <%= form.date_field :last_sung_at, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": song.errors[:last_sung_at].none?, "border-red-400 focus:outline-red-600": song.errors[:last_sung_at].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :times_sung_count %>
+    <%= form.number_field :times_sung_count, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": song.errors[:times_sung_count].none?, "border-red-400 focus:outline-red-600": song.errors[:times_sung_count].any?}] %>
+  </div>
+
+  <div class="inline">
+    <%= form.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<% end %>
