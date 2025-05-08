@@ -1,0 +1,2 @@
+module BibleReferencesHelper
+end
